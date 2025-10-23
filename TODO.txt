@@ -1,0 +1,9 @@
+HERO SECTION
+
+--> Font navigatie veranderen 
+--> CTA border-radius volledig afronden
+--> Social icons navigatie
+
+
+ABOUT SECTION
+-->

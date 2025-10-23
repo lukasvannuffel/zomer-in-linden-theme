@@ -1,46 +1,40 @@
 <?php
 /**
- * Fallback Template
+ * Index Template
  * 
- * This template is used when no more specific template is available.
- * In our case, specific templates (front-page.php, page-lineup.php, etc.) 
- * will handle most pages, but this acts as a safety net.
+ * This is the fallback template used when no more specific template is available
  * 
- * @package Zomer_In_Linden
+ * @package Zomer_in_Linden
  */
 
 get_header(); ?>
 
-<main id="main-content" class="site-main" role="main">
-    
-    <?php if (have_posts()) : ?>
+<div class="container">
+    <div class="content-wrapper">
         
-        <?php while (have_posts()) : the_post(); ?>
+        <?php if (have_posts()): ?>
             
-            <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+            <?php while (have_posts()): the_post(); ?>
                 
-                <header class="entry-header">
-                    <h1 class="entry-title"><?php the_title(); ?></h1>
-                </header>
+                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                    <header class="entry-header">
+                        <h1 class="entry-title"><?php the_title(); ?></h1>
+                    </header>
+                    
+                    <div class="entry-content">
+                        <?php the_content(); ?>
+                    </div>
+                </article>
                 
-                <div class="entry-content">
-                    <?php the_content(); ?>
-                </div>
-                
-            </article>
+            <?php endwhile; ?>
             
-        <?php endwhile; ?>
+        <?php else: ?>
+            
+            <p><?php esc_html_e('No content found', 'zomer-in-linden'); ?></p>
+            
+        <?php endif; ?>
         
-    <?php else : ?>
-        
-        <!-- No content found -->
-        <article class="no-content">
-            <h1>Niets gevonden</h1>
-            <p>Sorry, deze pagina bestaat niet.</p>
-        </article>
-        
-    <?php endif; ?>
-    
-</main>
+    </div>
+</div>
 
 <?php get_footer(); ?>

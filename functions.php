@@ -2,147 +2,223 @@
 /**
  * Zomer in Linden Theme Functions
  * 
- * This file contains all theme setup, enqueues, and custom functionality.
- * @package Zomer_In_Linden
+ * This file contains all the theme's core functionality including:
+ * - Enqueuing CSS and JavaScript files
+ * - Theme support features
+ * - Custom post types and taxonomies
+ * - ACF field registration
+ * 
+ * @package Zomer_in_Linden
  * @since 1.0.0
  */
 
-// Prevent direct access to this file
+// Exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
 }
 
 /**
  * Theme Setup
- * Runs after WordPress initialization
+ * 
+ * Registers theme support for various WordPress features
  */
-function zomer_theme_setup() {
+function zil_theme_setup() {
     
-    // Add theme support for various WordPress features
-    add_theme_support('title-tag');                    // Let WordPress manage document title
-    add_theme_support('post-thumbnails');              // Enable featured images
-    add_theme_support('html5', array(                  // Enable HTML5 markup
+    // Add default posts and comments RSS feed links to head
+    add_theme_support('automatic-feed-links');
+    
+    // Let WordPress manage the document title
+    add_theme_support('title-tag');
+    
+    // Enable support for Post Thumbnails on posts and pages
+    add_theme_support('post-thumbnails');
+    
+    // Add support for responsive embedded content
+    add_theme_support('responsive-embeds');
+    
+    // Add support for HTML5 markup
+    add_theme_support('html5', array(
         'search-form',
         'comment-form',
         'comment-list',
         'gallery',
         'caption',
-        'script',
-        'style'
+        'style',
+        'script'
     ));
-    add_theme_support('responsive-embeds');            // Responsive embedded content
-    add_theme_support('custom-logo');                  // Allow logo upload in Customizer
     
-    // Register navigation menus
+    // Register navigation menu
     register_nav_menus(array(
-        'primary' => __('Primary Menu', 'zomer-in-linden'),
-        'footer'  => __('Footer Menu', 'zomer-in-linden'),
+        'primary-menu' => __('Primary Menu', 'zomer-in-linden'),
+        'footer-menu' => __('Footer Menu', 'zomer-in-linden')
     ));
-    
-    // Set content width (for embedded content)
-    if (!isset($content_width)) {
-        $content_width = 1200;
-    }
 }
-add_action('after_setup_theme', 'zomer_theme_setup');
+add_action('after_setup_theme', 'zil_theme_setup');
 
 /**
  * Enqueue Styles and Scripts
- * Loads CSS and JavaScript files properly
+ * 
+ * Properly loads CSS and JavaScript files in the correct order
  */
-function zomer_enqueue_assets() {
+function zil_enqueue_assets() {
     
-    // Get theme version (useful for cache busting during development)
-    $theme_version = wp_get_theme()->get('Version');
-    
-    // Enqueue main stylesheet
+    // Main stylesheet (required by WordPress)
     wp_enqueue_style(
-        'zomer-main-style',                           // Handle name
-        get_template_directory_uri() . '/assets/css/main.css',  // File path
-        array(),                                      // Dependencies (none)
-        $theme_version,                               // Version number
-        'all'                                         // Media type
+        'zil-style',
+        get_stylesheet_uri(),
+        array(),
+        wp_get_theme()->get('Version')
     );
     
-    // Enqueue main JavaScript file
+    // Custom CSS file
+    wp_enqueue_style(
+        'zil-main-style',
+        get_template_directory_uri() . '/assets/css/main.css',
+        array('zil-style'),
+        wp_get_theme()->get('Version')
+    );
+    
+    // Main JavaScript file (loaded in footer for better performance)
     wp_enqueue_script(
-        'zomer-main-script',                          // Handle name
-        get_template_directory_uri() . '/assets/js/main.js',    // File path
-        array(),                                      // Dependencies (none - or add 'jquery' if needed)
-        $theme_version,                               // Version number
-        true                                          // Load in footer (true = better performance)
+        'zil-main-script',
+        get_template_directory_uri() . '/assets/js/main.js',
+        array(), // No dependencies
+        wp_get_theme()->get('Version'),
+        true // Load in footer
     );
     
-    // Pass data from PHP to JavaScript (optional - useful for AJAX)
-    wp_localize_script('zomer-main-script', 'zomerData', array(
+    // Pass data from PHP to JavaScript (useful for AJAX)
+    wp_localize_script('zil-main-script', 'zilData', array(
         'ajaxUrl' => admin_url('admin-ajax.php'),
-        'nonce'   => wp_create_nonce('zomer-nonce'),
+        'nonce' => wp_create_nonce('zil-nonce')
     ));
 }
-add_action('wp_enqueue_scripts', 'zomer_enqueue_assets');
+add_action('wp_enqueue_scripts', 'zil_enqueue_assets');
 
 /**
- * Include additional files
- * Keep functions.php clean by separating concerns
+ * Register Custom Image Sizes
+ * 
+ * Create specific image sizes for partners, artists, etc.
  */
-require_once get_template_directory() . '/inc/custom-functions.php';
-
-// Include ACF fields only if ACF is active
-if (function_exists('acf_add_local_field_group')) {
-    require_once get_template_directory() . '/inc/acf-fields.php';
+function zil_custom_image_sizes() {
+    add_image_size('partner-logo', 300, 150, true); // For partner logos
+    add_image_size('artist-photo', 600, 400, true); // For artist photos
+    add_image_size('hero-image', 1920, 1080, true); // For hero sections
 }
+add_action('after_setup_theme', 'zil_custom_image_sizes');
 
 /**
- * Register Custom Post Type for Artists (for Line-up page)
- * Makes it easy to manage artist entries separately
+ * Custom Post Type: Artists
+ * 
+ * Creates a custom post type for managing festival artists/performers
  */
-function zomer_register_artists_cpt() {
+function zil_register_artists_post_type() {
     
     $labels = array(
-        'name'               => 'Artists',
-        'singular_name'      => 'Artist',
-        'menu_name'          => 'Artists',
-        'add_new'            => 'Add New Artist',
-        'add_new_item'       => 'Add New Artist',
-        'edit_item'          => 'Edit Artist',
-        'new_item'           => 'New Artist',
-        'view_item'          => 'View Artist',
-        'search_items'       => 'Search Artists',
-        'not_found'          => 'No artists found',
-        'not_found_in_trash' => 'No artists found in trash',
+        'name' => 'Artists',
+        'singular_name' => 'Artist',
+        'menu_name' => 'Artists',
+        'add_new' => 'Add New Artist',
+        'add_new_item' => 'Add New Artist',
+        'edit_item' => 'Edit Artist',
+        'new_item' => 'New Artist',
+        'view_item' => 'View Artist',
+        'search_items' => 'Search Artists',
+        'not_found' => 'No artists found',
+        'not_found_in_trash' => 'No artists found in trash'
     );
     
     $args = array(
-        'labels'              => $labels,
-        'public'              => true,
-        'has_archive'         => false,             // We'll display artists on line-up page
-        'publicly_queryable'  => false,             // No single artist pages
-        'show_ui'             => true,              // Show in admin
-        'show_in_menu'        => true,
-        'show_in_rest'        => true,              // Enable Gutenberg editor
-        'menu_icon'           => 'dashicons-star-filled',
-        'supports'            => array('title', 'editor', 'thumbnail'),
-        'rewrite'             => false,
+        'labels' => $labels,
+        'public' => true,
+        'has_archive' => false,
+        'publicly_queryable' => true,
+        'show_in_menu' => true,
+        'show_in_rest' => true, // Enable Gutenberg editor
+        'menu_icon' => 'dashicons-album',
+        'supports' => array('title', 'editor', 'thumbnail'),
+        'rewrite' => array('slug' => 'artist')
     );
     
     register_post_type('artist', $args);
 }
-add_action('init', 'zomer_register_artists_cpt');
+add_action('init', 'zil_register_artists_post_type');
 
 /**
- * Add ACF Options Page for Global Settings
- * Allows editing of content that appears site-wide
+ * Custom Post Type: Partners
+ * 
+ * Creates a custom post type for managing festival partners/sponsors
+ */
+function zil_register_partners_post_type() {
+    
+    $labels = array(
+        'name' => 'Partners',
+        'singular_name' => 'Partner',
+        'menu_name' => 'Partners',
+        'add_new' => 'Add New Partner',
+        'add_new_item' => 'Add New Partner',
+        'edit_item' => 'Edit Partner',
+        'new_item' => 'New Partner',
+        'view_item' => 'View Partner',
+        'search_items' => 'Search Partners',
+        'not_found' => 'No partners found',
+        'not_found_in_trash' => 'No partners found in trash'
+    );
+    
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'has_archive' => false,
+        'publicly_queryable' => false, // Partners don't need individual pages
+        'show_in_menu' => true,
+        'show_in_rest' => true,
+        'menu_icon' => 'dashicons-groups',
+        'supports' => array('title', 'thumbnail'),
+        'rewrite' => array('slug' => 'partner')
+    );
+    
+    register_post_type('partner', $args);
+}
+add_action('init', 'zil_register_partners_post_type');
+
+/**
+ * ACF Options Page
+ * 
+ * Creates a settings page in WordPress admin for site-wide options
+ * Note: This requires ACF Pro OR you can use native WordPress options
  */
 if (function_exists('acf_add_options_page')) {
-    
     acf_add_options_page(array(
         'page_title' => 'Theme Settings',
         'menu_title' => 'Theme Settings',
-        'menu_slug'  => 'theme-settings',
+        'menu_slug' => 'theme-settings',
         'capability' => 'edit_posts',
-        'icon_url'   => 'dashicons-admin-settings',
-        'redirect'   => false
+        'icon_url' => 'dashicons-admin-generic',
+        'redirect' => false
     ));
 }
 
-?>
+/**
+ * Remove unnecessary WordPress features for cleaner admin
+ */
+function zil_remove_unnecessary_features() {
+    // Remove posts (if you don't need a blog)
+    // remove_menu_page('edit.php');
+    
+    // Remove comments (if not needed)
+    remove_menu_page('edit-comments.php');
+}
+add_action('admin_menu', 'zil_remove_unnecessary_features');
+
+/**
+ * Custom excerpt length
+ */
+function zil_excerpt_length($length) {
+    return 20; // Number of words
+}
+add_filter('excerpt_length', 'zil_excerpt_length');
+
+/**
+ * Security: Remove WordPress version from head
+ */
+remove_action('wp_head', 'wp_generator');
