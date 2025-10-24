@@ -182,20 +182,177 @@ function zil_register_partners_post_type() {
 add_action('init', 'zil_register_partners_post_type');
 
 /**
- * ACF Options Page
+ * Theme Customizer Settings
  * 
- * Creates a settings page in WordPress admin for site-wide options
- * Note: This requires ACF Pro OR you can use native WordPress options
+ * Registers all theme settings in the WordPress Customizer
+ * This replaces ACF Options Page (which requires Pro)
  */
-if (function_exists('acf_add_options_page')) {
-    acf_add_options_page(array(
-        'page_title' => 'Theme Settings',
-        'menu_title' => 'Theme Settings',
-        'menu_slug' => 'theme-settings',
-        'capability' => 'edit_posts',
-        'icon_url' => 'dashicons-admin-generic',
-        'redirect' => false
+function zil_customize_register($wp_customize) {
+    
+    /* ============================================
+       SECTION 1: SITE IDENTITY (Logo & Branding)
+       ============================================ */
+    
+    // Logo is already built into WordPress under "Site Identity"
+    // We'll add a custom logo support
+    add_theme_support('custom-logo', array(
+        'height'      => 100,
+        'width'       => 300,
+        'flex-height' => true,
+        'flex-width'  => true,
     ));
+    
+    /* ============================================
+       SECTION 2: CONTACT INFORMATION
+       ============================================ */
+    
+    $wp_customize->add_section('zil_contact_info', array(
+        'title'       => __('Contact Information', 'zomer-in-linden'),
+        'description' => __('Manage contact details displayed on the website', 'zomer-in-linden'),
+        'priority'    => 30,
+    ));
+    
+    // Contact Email
+    $wp_customize->add_setting('zil_contact_email', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_email',
+        'transport'         => 'refresh',
+    ));
+    
+    $wp_customize->add_control('zil_contact_email', array(
+        'label'       => __('Contact Email', 'zomer-in-linden'),
+        'description' => __('Main contact email address', 'zomer-in-linden'),
+        'section'     => 'zil_contact_info',
+        'type'        => 'email',
+    ));
+    
+    // Contact Phone
+    $wp_customize->add_setting('zil_contact_phone', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    
+    $wp_customize->add_control('zil_contact_phone', array(
+        'label'       => __('Contact Phone', 'zomer-in-linden'),
+        'description' => __('Contact phone number', 'zomer-in-linden'),
+        'section'     => 'zil_contact_info',
+        'type'        => 'text',
+    ));
+    
+    // Contact Address
+    $wp_customize->add_setting('zil_contact_address', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    
+    $wp_customize->add_control('zil_contact_address', array(
+        'label'       => __('Contact Address', 'zomer-in-linden'),
+        'description' => __('Physical address of the festival', 'zomer-in-linden'),
+        'section'     => 'zil_contact_info',
+        'type'        => 'textarea',
+    ));
+    
+    /* ============================================
+       SECTION 3: SOCIAL MEDIA LINKS
+       ============================================ */
+    
+    $wp_customize->add_section('zil_social_media', array(
+        'title'       => __('Social Media', 'zomer-in-linden'),
+        'description' => __('Add your social media profile links', 'zomer-in-linden'),
+        'priority'    => 31,
+    ));
+    
+    // Facebook
+    $wp_customize->add_setting('zil_social_facebook', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ));
+    
+    $wp_customize->add_control('zil_social_facebook', array(
+        'label'       => __('Facebook URL', 'zomer-in-linden'),
+        'description' => __('Full URL to your Facebook page', 'zomer-in-linden'),
+        'section'     => 'zil_social_media',
+        'type'        => 'url',
+    ));
+    
+    // Instagram
+    $wp_customize->add_setting('zil_social_instagram', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ));
+    
+    $wp_customize->add_control('zil_social_instagram', array(
+        'label'       => __('Instagram URL', 'zomer-in-linden'),
+        'description' => __('Full URL to your Instagram profile', 'zomer-in-linden'),
+        'section'     => 'zil_social_media',
+        'type'        => 'url',
+    ));
+    
+    // Twitter/X
+    $wp_customize->add_setting('zil_social_twitter', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ));
+    
+    $wp_customize->add_control('zil_social_twitter', array(
+        'label'       => __('Twitter/X URL', 'zomer-in-linden'),
+        'description' => __('Full URL to your Twitter/X profile', 'zomer-in-linden'),
+        'section'     => 'zil_social_media',
+        'type'        => 'url',
+    ));
+    
+    // TikTok
+    $wp_customize->add_setting('zil_social_tiktok', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ));
+    
+    $wp_customize->add_control('zil_social_tiktok', array(
+        'label'       => __('TikTok URL', 'zomer-in-linden'),
+        'description' => __('Full URL to your TikTok profile', 'zomer-in-linden'),
+        'section'     => 'zil_social_media',
+        'type'        => 'url',
+    ));
+    
+    /* ============================================
+       SECTION 4: FOOTER SETTINGS
+       ============================================ */
+    
+    $wp_customize->add_section('zil_footer_settings', array(
+        'title'       => __('Footer Settings', 'zomer-in-linden'),
+        'description' => __('Customize footer content', 'zomer-in-linden'),
+        'priority'    => 32,
+    ));
+    
+    // Footer About Text
+    $wp_customize->add_setting('zil_footer_about', array(
+        'default'           => '',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ));
+    
+    $wp_customize->add_control('zil_footer_about', array(
+        'label'       => __('Footer About Text', 'zomer-in-linden'),
+        'description' => __('Short description about the festival for footer', 'zomer-in-linden'),
+        'section'     => 'zil_footer_settings',
+        'type'        => 'textarea',
+    ));
+    
+}
+add_action('customize_register', 'zil_customize_register');
+
+/**
+ * Helper function to get theme settings
+ * Usage: zil_get_setting('contact_email')
+ */
+function zil_get_setting($setting_name) {
+    return get_theme_mod('zil_' . $setting_name, '');
 }
 
 /**

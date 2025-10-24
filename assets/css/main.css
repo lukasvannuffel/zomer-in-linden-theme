@@ -464,6 +464,16 @@ p {
     opacity: 0.6;
     animation: bounce 2s infinite;
 }
+/* Custom Logo from Customizer */
+.custom-logo-link {
+    display: block;
+}
+
+.custom-logo {
+    height: 60px;
+    width: auto;
+    display: block;
+}
 
 /* ============================================
    5. HERO SECTION (UPDATED TO MATCH DESIGN)
@@ -1206,6 +1216,11 @@ p {
     .site-logo {
         height: 70px;
     }
+
+    .custom-logo {
+        height: 70px;
+    }
+}
     
     .nav-menu {
         gap: 2.5rem;
@@ -1228,7 +1243,6 @@ p {
     .partners-grid {
         grid-template-columns: repeat(5, 1fr);
     }
-}
 
 /* Large Desktop (1440px and up) */
 @media screen and (min-width: 1440px) {
