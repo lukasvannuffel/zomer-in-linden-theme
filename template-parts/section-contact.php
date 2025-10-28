@@ -45,7 +45,7 @@ $contact_phone = zil_get_setting('contact_phone');
                 <!-- Google Maps Embed -->
                 <div class="contact-map">
                     <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2516.6870861847754!2d4.758658276743089!3d50.93878565405738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c16036c6c92b45%3A0xb6e1e7b3e1e1e1e1!2sMolenveldlaan%2C%203210%20Linden%2C%20Belgium!5e0!3m2!1sen!2sbe!4v1234567890123!5m2!1sen!2sbe"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2516.510163529314!2d4.764568776850105!3d50.89577575519951!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c167ace1bcb129%3A0xd0a1d6ce4029b876!2sZomer%20in%20Linden!5e0!3m2!1snl!2sbe!4v1761660120520!5m2!1snl!2sbe"
                         width="100%" 
                         height="400" 
                         style="border:0;" 
