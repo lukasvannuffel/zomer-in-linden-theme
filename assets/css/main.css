@@ -784,43 +784,145 @@ p,
 }
 
 /* ============================================
-   8. CONTACT SECTION
+   8. CONTACT SECTION (UPDATED WITH FORM)
    ============================================ */
 
 .contact-section {
     background: var(--color-light);
 }
 
-.contact-grid {
+/* Contact Grid Layout - Side by Side */
+.contact-grid-layout {
     display: grid;
+    grid-template-columns: 1fr;
     gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
 }
 
-/* Contact Form */
-.contact-form-wrapper {
+/* Left Column: Map + Info */
+.contact-left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Google Maps Styling */
+.contact-map {
+    width: 100%;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    height: 400px;
+}
+
+.contact-map iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Contact Info Box Below Map */
+.contact-info-box {
     background: var(--color-white);
     padding: var(--spacing-md);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
 }
 
-.form-group {
+.contact-info-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    font-family: var(--font-primary);
+    font-weight: 700;
+}
+
+.contact-info-item:last-of-type {
     margin-bottom: var(--spacing-md);
 }
 
-.form-group label {
+.contact-info-item svg {
+    flex-shrink: 0;
+    color: var(--color-primary);
+}
+
+.contact-info-item a {
+    color: var(--color-text);
+    font-weight: 700;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.contact-info-item a:hover {
+    color: var(--color-primary);
+}
+
+/* Social Media Links in Contact Box */
+.contact-social-links {
+    display: flex;
+    gap: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-light);
+}
+
+.contact-social-links .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.contact-social-links .social-icon:hover {
+    background: var(--color-secondary);
+    transform: translateY(-3px);
+}
+
+/* Right Column: Contact Form */
+.contact-right {
+    width: 100%;
+}
+
+.contact-form-container {
+    background: var(--color-white);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+}
+
+/* ============================================
+   CONTACT FORM 7 CUSTOM STYLING
+   ============================================ */
+
+/* Form Wrapper */
+.cf7-form-wrapper {
+    width: 100%;
+}
+
+/* Form Rows */
+.cf7-form-wrapper .form-row {
+    margin-bottom: var(--spacing-md);
+}
+
+/* Labels */
+.cf7-form-wrapper label {
     display: block;
     margin-bottom: var(--spacing-xs);
     font-family: var(--font-primary);
-    font-weight: 700; /* Barlow Condensed Bold */
+    font-weight: 700;
     color: var(--color-dark);
     text-transform: uppercase;
     font-size: 0.95rem;
     letter-spacing: 0.5px;
 }
 
-.form-group input,
-.form-group textarea {
+/* Input Fields */
+.cf7-form-wrapper .form-control {
     width: 100%;
     padding: var(--spacing-sm);
     border: 2px solid var(--color-light);
@@ -829,79 +931,152 @@ p,
     font-weight: 500;
     font-size: 1rem;
     transition: var(--transition);
+    background: var(--color-white);
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
+.cf7-form-wrapper .form-control:focus {
     outline: none;
     border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(35, 123, 186, 0.1);
 }
 
-.form-group textarea {
+/* Textarea */
+.cf7-form-wrapper textarea.form-control {
     resize: vertical;
-    min-height: 120px;
+    min-height: 150px;
+    font-family: var(--font-primary);
 }
 
-/* Submit Button - Kanit Semibold */
-.contact-form button[type="submit"] {
+/* Privacy Checkbox Row */
+.cf7-form-wrapper .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+}
+
+.cf7-form-wrapper .checkbox-row .wpcf7-list-item {
+    margin: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+}
+
+.cf7-form-wrapper .checkbox-row input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: var(--color-primary);
+}
+
+.cf7-form-wrapper .checkbox-row label {
+    font-family: var(--font-primary);
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-transform: none;
+    color: var(--color-text);
+    cursor: pointer;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.cf7-form-wrapper .checkbox-row label a {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.cf7-form-wrapper .checkbox-row label a:hover {
+    color: var(--color-secondary);
+}
+
+/* Submit Button */
+.cf7-form-wrapper .btn {
     font-family: var(--font-buttons);
-    font-weight: 600; /* Kanit Semibold */
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    border: 2px solid var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-white);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
 }
 
-.form-message {
-    margin-top: var(--spacing-sm);
-    padding: var(--spacing-sm);
-    border-radius: var(--border-radius);
-    font-family: var(--font-primary);
-    font-weight: 600;
-}
-
-.form-message.success {
-    background: #d4edda;
-    color: #155724;
-}
-
-.form-message.error {
-    background: #f8d7da;
-    color: #721c24;
-}
-
-/* Contact Info */
-.contact-info {
-    background: var(--color-white);
-    padding: var(--spacing-md);
-    border-radius: var(--border-radius);
+.cf7-form-wrapper .btn:hover {
+    background: var(--color-secondary);
+    border-color: var(--color-secondary);
+    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 
-.contact-info h3 {
-    margin-bottom: var(--spacing-md);
+.cf7-form-wrapper .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
+/* Success/Error Messages */
+.wpcf7-response-output {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
     font-family: var(--font-primary);
     font-weight: 600;
+    text-align: center;
 }
 
-.contact-item svg {
-    flex-shrink: 0;
-    color: var(--color-primary);
+.wpcf7-mail-sent-ok {
+    background: #d4edda;
+    color: #155724;
+    border: 2px solid #c3e6cb;
 }
 
-.contact-item a {
-    color: var(--color-text);
-    word-break: break-word;
+.wpcf7-mail-sent-ng,
+.wpcf7-aborted {
+    background: #f8d7da;
+    color: #721c24;
+    border: 2px solid #f5c6cb;
+}
+
+.wpcf7-spam-blocked {
+    background: #fff3cd;
+    color: #856404;
+    border: 2px solid #ffeaa7;
+}
+
+.wpcf7-validation-errors {
+    background: #fff3cd;
+    color: #856404;
+    border: 2px solid #ffeaa7;
+}
+
+/* Individual Field Validation Errors */
+.wpcf7-not-valid-tip {
+    color: #dc3545;
+    font-size: 0.875rem;
+    font-family: var(--font-primary);
     font-weight: 600;
+    margin-top: var(--spacing-xs);
+    display: block;
 }
 
-.contact-item a:hover {
-    color: var(--color-primary);
+.wpcf7-not-valid {
+    border-color: #dc3545 !important;
+}
+
+/* Loading Spinner */
+.wpcf7 form.submitting .wpcf7-submit {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.wpcf7 form .ajax-loader {
+    display: inline-block;
+    margin-left: var(--spacing-sm);
+    vertical-align: middle;
 }
 
 /* ============================================
@@ -1304,6 +1479,20 @@ p,
     .contact-grid {
         grid-template-columns: 1.5fr 1fr;
     }
+
+    .contact-grid-layout {
+        grid-template-columns: 45% 55%;
+        gap: var(--spacing-xl);
+    }
+    
+    .contact-map {
+        height: 100%;
+        min-height: 500px;
+    }
+    
+    .contact-form-container {
+        padding: var(--spacing-xl);
+    }
     
     /* Footer */
     .footer-grid {
@@ -1314,6 +1503,8 @@ p,
     .artists-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    
 }
 
 /* Desktop (1024px and up) */
@@ -1334,6 +1525,11 @@ p,
     
     .nav-menu a {
         font-size: 1.05rem;
+    }
+
+    /* Contact */
+    .contact-grid-layout {
+        grid-template-columns: 40% 60%;
     }
     
     /* Footer */
