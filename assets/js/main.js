@@ -17,50 +17,51 @@
        1. MOBILE MENU TOGGLE
        ============================================ */
     
-    function initMobileMenu() {
+     function initMobileMenu() {
         const menuToggle = document.querySelector('.mobile-menu-toggle');
-        const primaryNav = document.querySelector('.primary-navigation');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const menuClose = document.querySelector('.mobile-menu-close');
         const body = document.body;
         
-        if (!menuToggle || !primaryNav) return;
+        if (!menuToggle || !mobileMenu) return;
         
+        // Open menu when clicking hamburger
         menuToggle.addEventListener('click', function() {
             const isExpanded = this.getAttribute('aria-expanded') === 'true';
             
-            // Toggle aria-expanded attribute
             this.setAttribute('aria-expanded', !isExpanded);
-            
-            // Toggle active class on navigation
-            primaryNav.classList.toggle('active');
-            
-            // Prevent body scroll when menu is open
+            mobileMenu.classList.toggle('active');
+            mobileMenu.setAttribute('aria-hidden', isExpanded);
             body.style.overflow = isExpanded ? '' : 'hidden';
         });
         
-        // Close menu when clicking on a link
-        const navLinks = primaryNav.querySelectorAll('a');
+        // Close menu with close button
+        if (menuClose) {
+            menuClose.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                mobileMenu.setAttribute('aria-hidden', 'true');
+                body.style.overflow = '';
+            });
+        }
+        
+        // Close menu when clicking a link
+        const navLinks = mobileMenu.querySelectorAll('a');
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
-                primaryNav.classList.remove('active');
+                mobileMenu.classList.remove('active');
                 menuToggle.setAttribute('aria-expanded', 'false');
+                mobileMenu.setAttribute('aria-hidden', 'true');
                 body.style.overflow = '';
             });
         });
         
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!primaryNav.contains(e.target) && !menuToggle.contains(e.target)) {
-                primaryNav.classList.remove('active');
-                menuToggle.setAttribute('aria-expanded', 'false');
-                body.style.overflow = '';
-            }
-        });
-        
-        // Close menu on window resize
+        // Close menu on window resize to desktop
         window.addEventListener('resize', function() {
             if (window.innerWidth >= 768) {
-                primaryNav.classList.remove('active');
+                mobileMenu.classList.remove('active');
                 menuToggle.setAttribute('aria-expanded', 'false');
+                mobileMenu.setAttribute('aria-hidden', 'true');
                 body.style.overflow = '';
             }
         });
