@@ -60,6 +60,6 @@ $partners_title = get_field('partners_title');
             endif;
             ?>
         </div>
-        
+
     </div>
 </section>

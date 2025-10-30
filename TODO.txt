@@ -1,5 +1,5 @@
 HERO SECTION
---> CTA border-radius volledig afronden. 
+--> CTA border-radius volledig afronden.
 
 ABOUT SECTION
 --> Instagram feed embedden. 
@@ -13,5 +13,3 @@ CONTACT SECTION
 RESPONSIVE
 --> Witte rand rechts wanneer er op iPad wordt gekeken.
 
-NAVIGATION
---> Ik kan niet terug gaan naar de landingspagina sections wanneer ik op de Line-up of Praktisch pagina zit.

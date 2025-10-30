@@ -226,7 +226,7 @@ p,
 }
 
 /* ============================================
-   4. HEADER & NAVIGATION (UPDATED)
+   4. HEADER & NAVIGATION
    ============================================ */
 
 .site-header {
@@ -475,7 +475,7 @@ p,
 }
 
 .mobile-nav-menu li {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .mobile-nav-menu a {
@@ -493,16 +493,6 @@ p,
 .mobile-nav-menu a:hover {
     color: var(--color-accent);
     transform: translateX(10px);
-}
-
-/* Mobile Menu Scroll Indicator */
-.mobile-menu-scroll {
-    text-align: center;
-    margin-top: auto;
-    padding-top: 2rem;
-    color: #ffffff;
-    opacity: 0.6;
-    animation: bounce 2s infinite;
 }
 
 /* ============================================
@@ -766,7 +756,7 @@ p,
 
 .partner-logo {
     width: 100%;
-    height: auto;
+    height: 100%;
     max-width: 200px;
     object-fit: contain;
     filter: grayscale(100%);

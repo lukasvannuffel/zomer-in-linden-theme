@@ -10,6 +10,7 @@
 $about_title = get_field('about_title');
 $about_content = get_field('about_content');
 $about_image = get_field('about_image');
+$instagram_feed = get_field('instagram_feed');
 ?>
 
 <section id="about" class="about-section section-padding">
@@ -36,7 +37,13 @@ $about_image = get_field('about_image');
                          alt="<?php echo esc_attr($about_title); ?>">
                 </div>
             <?php endif; ?>
-            
         </div>
+        <!-- Instagram Feed -->
+
+        <?php if ($instagram_feed): ?>
+            <div class="instagram-feed">
+                <?php echo wp_kses_post($instagram_feed); ?>
+            </div>
+        <?php endif; ?>
     </div>
 </section>

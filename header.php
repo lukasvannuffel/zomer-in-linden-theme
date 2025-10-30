@@ -112,13 +112,6 @@
 <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
     <div class="mobile-menu-inner">
         
-        <!-- Close Button (in top right) -->
-        <button class="mobile-menu-close" aria-label="Close menu">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-            </svg>
-        </button>
-        
         <!-- Mobile Navigation -->
         <nav class="mobile-navigation" role="navigation" aria-label="Mobile Menu">
             <?php
@@ -130,13 +123,7 @@
             ));
             ?>
         </nav>
-        
-        <!-- Scroll indicator at bottom -->
-        <div class="mobile-menu-scroll">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-            </svg>
-        </div>
+
     </div>
 </div>
 
