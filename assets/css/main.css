@@ -608,7 +608,7 @@ body.force-header-fill .site-header {
     font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    border-radius: 999px;
+    border-radius:  999px !important;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     transition: var(--transition);
 }
