@@ -7,7 +7,11 @@
  * @package Zomer_in_Linden
  */
 
+
 get_header(); ?>
+
+<script>document.body.classList.add('force-header-fill');</script>
+
 
 <div class="practical-page">
     <div class="container">

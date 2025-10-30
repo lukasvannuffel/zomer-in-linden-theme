@@ -241,7 +241,8 @@ p,
 }
 
 /* Header becomes solid on scroll */
-.site-header.scrolled {
+.site-header.scrolled,
+body.force-header-fill .site-header {
     background: rgba(0, 45, 98, 0.9);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
@@ -607,7 +608,7 @@ p,
     font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    border-radius: 50px;
+    border-radius: 999px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     transition: var(--transition);
 }
