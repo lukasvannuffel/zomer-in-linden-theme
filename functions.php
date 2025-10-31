@@ -181,6 +181,47 @@ function zil_register_partners_post_type() {
 }
 add_action('init', 'zil_register_partners_post_type');
 
+
+/**
+ * Custom Post Type: FAQs
+ * 
+ * Creates a custom post type for managing FAQ items
+ */
+function zil_register_faq_post_type() {
+    
+    $labels = array(
+        'name' => 'FAQs',
+        'singular_name' => 'FAQ',
+        'menu_name' => 'FAQs',
+        'add_new' => 'Add New FAQ',
+        'add_new_item' => 'Add New FAQ',
+        'edit_item' => 'Edit FAQ',
+        'new_item' => 'New FAQ',
+        'view_item' => 'View FAQ',
+        'search_items' => 'Search FAQs',
+        'not_found' => 'No FAQs found',
+        'not_found_in_trash' => 'No FAQs found in trash'
+    );
+    
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'has_archive' => false,
+        'publicly_queryable' => false, // FAQs don't need individual pages
+        'show_in_menu' => true,
+        'show_in_rest' => true, // Enable Gutenberg editor
+        'menu_icon' => 'dashicons-editor-help',
+        'supports' => array('title', 'editor'), // THIS IS THE KEY LINE - enables content editor
+        'rewrite' => array('slug' => 'faq'),
+        'capability_type' => 'post',
+        'show_ui' => true,
+        'menu_position' => 25
+    );
+    
+    register_post_type('faq', $args);
+}
+add_action('init', 'zil_register_faq_post_type');
+
 /**
  * Theme Customizer Settings
  * 

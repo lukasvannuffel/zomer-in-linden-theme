@@ -31,7 +31,7 @@
 
 :root {
     /* Colors - Based on your brand */
-    --color-primary: #237BBA;
+    --color-primary: #21618f;
     --color-secondary: #004E89;
     --color-tertiary: #002D62;
     --color-accent: #44987B;
@@ -48,6 +48,7 @@
     --font-buttons: 'Kanit', sans-serif;                /* For buttons - Semibold 600 */
     
     /* Spacing */
+    --spacing-xxs: 0.25rem;
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
     --spacing-md: 2rem;
@@ -738,6 +739,7 @@ body.force-header-fill .site-header {
 
 .partner-item {
     width: 100%;
+    height: 100%;
     padding: var(--spacing-sm);
     display: flex;
     align-items: center;
@@ -897,13 +899,13 @@ body.force-header-fill .site-header {
 
 /* Form Rows */
 .cf7-form-wrapper .form-row {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
 }
 
 /* Labels */
 .cf7-form-wrapper label {
     display: block;
-    margin-bottom: var(--spacing-xs);
+
     font-family: var(--font-primary);
     font-weight: 700;
     color: var(--color-dark);
@@ -912,10 +914,11 @@ body.force-header-fill .site-header {
     letter-spacing: 0.5px;
 }
 
+
 /* Input Fields */
 .cf7-form-wrapper .form-control {
     width: 100%;
-    padding: var(--spacing-sm);
+    padding: var(--spacing-xs);
     border: 2px solid var(--color-light);
     border-radius: var(--border-radius);
     font-family: var(--font-primary);
@@ -1008,6 +1011,14 @@ body.force-header-fill .site-header {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+.cf7-form-wrapper label {
+    margin-bottom: 0.15rem; /* label sticks close to input */
+  }
+  
+  .cf7-form-wrapper .form-row {
+    margin-bottom: var(--spacing-xxs); /* space between label+field pairs */
+  }
 
 /* Success/Error Messages */
 .wpcf7-response-output {
@@ -1326,46 +1337,184 @@ body.force-header-fill .site-header {
     line-height: 1.6;
 }
 
-/* FAQ Section */
-.faq-section {
+/* ============================================
+   FAQ ACCORDION SECTION
+   ============================================ */
+
+   .faq-section {
     margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg) 0;
 }
 
-.faq-section h2 {
+.faq-main-title {
     font-family: var(--font-heading);
-    font-weight: 900; /* Kanit Black */
+    font-weight: 900;
     text-align: center;
     margin-bottom: var(--spacing-lg);
+    color: var(--color-primary);
+    text-transform: uppercase;
 }
 
-.faq-list {
+.faq-accordion {
     max-width: 900px;
     margin: 0 auto;
 }
 
+/* Individual FAQ Item */
 .faq-item {
     background: var(--color-white);
-    padding: var(--spacing-md);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-sm);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    overflow: hidden;
+    transition: var(--transition);
 }
 
+.faq-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+/* FAQ Question Button */
 .faq-question {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
     font-family: var(--font-heading);
-    font-weight: 900; /* Kanit Black */
-    color: var(--color-primary);
-    margin-bottom: var(--spacing-sm);
-    font-size: 1.25rem;
+    font-weight: 900;
+    font-size: 1.125rem;
+    color: var(--color-dark);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    transition: var(--transition);
+    position: relative;
 }
 
-.faq-answer {
-    font-family: var(--font-primary);
+.faq-question:hover {
+    color: var(--color-primary);
+}
+
+.faq-question:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Category Badge */
+.faq-category-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--color-primary);
+    color: var(--color-white);
+    font-size: 0.75rem;
     font-weight: 600;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+/* Question Text */
+.faq-question-text {
+    flex: 1;
+    line-height: 1.4;
+}
+
+/* FAQ Icon (Arrow) */
+.faq-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    color: var(--color-primary);
+}
+
+/* Rotate icon when open */
+.faq-question[aria-expanded="true"] .faq-icon {
+    transform: rotate(180deg);
+}
+
+/* Change color when open */
+.faq-question[aria-expanded="true"] {
+    color: var(--color-primary);
+    background: var(--color-light);
+}
+
+/* FAQ Answer Container */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+
+/* Answer Content */
+.faq-answer-content {
+    padding: 0 var(--spacing-md) var(--spacing-md);
+    font-family: var(--font-primary);
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.8;
     color: var(--color-text);
-    line-height: 1.6;
+}
+
+.faq-answer-content p {
+    margin-bottom: var(--spacing-sm);
+}
+
+.faq-answer-content p:last-child {
+    margin-bottom: 0;
+}
+
+.faq-answer-content ul,
+.faq-answer-content ol {
+    margin-left: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.faq-answer-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.faq-answer-content strong {
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.faq-answer-content a {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.faq-answer-content a:hover {
+    color: var(--color-secondary);
+}
+
+/* Category Color Variations (Optional) */
+.faq-item[data-category="tickets"] .faq-category-badge {
+    background: #44987B;
+}
+
+.faq-item[data-category="location"] .faq-category-badge {
+    background: #004E89;
+}
+
+.faq-item[data-category="food"] .faq-category-badge {
+    background: #FF6B35;
+}
+
+.faq-item[data-category="accessibility"] .faq-category-badge {
+    background: #8B5CF6;
+}
+
+.faq-item[data-category="other"] .faq-category-badge {
+    background: #6B7280;
 }
 
 /* ============================================
@@ -1495,6 +1644,16 @@ body.force-header-fill .site-header {
         grid-template-columns: repeat(2, 1fr);
     }
 
+    .faq-question {
+        font-size: 1.25rem;
+        padding: var(--spacing-lg);
+    }
+    
+    .faq-answer-content {
+        padding: 0 var(--spacing-lg) var(--spacing-lg);
+        font-size: 1.1rem;
+    }
+
     
 }
 
@@ -1585,3 +1744,4 @@ body.force-header-fill .site-header {
         scroll-behavior: auto !important;
     }
 }
+

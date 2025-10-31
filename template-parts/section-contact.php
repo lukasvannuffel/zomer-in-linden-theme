@@ -36,8 +36,20 @@ $contact_phone = zil_get_setting('contact_phone');
             <?php endif; ?>
         </header>
         
-        <!-- Contact Grid: Map + Form -->
-        <div class="contact-grid-layout">
+
+            
+
+
+                    <!-- Contact Grid: Map + Form -->
+        <div class="contact-grid-layout">            <!-- Right Column: Contact Form -->
+            <div class="contact-right">
+                <div class="contact-form-container">
+                    <?php 
+                    // Display Contact Form 7
+                    echo do_shortcode('[contact-form-7 id="10cf1bd" title="Contact form - Zomer in Linden"]'); 
+                    ?>
+                </div>
+            </div>
             
             <!-- Left Column: Google Maps + Contact Info -->
             <div class="contact-left">
@@ -115,17 +127,6 @@ $contact_phone = zil_get_setting('contact_phone');
                             </a>
                         <?php endif; ?>
                     </div>
-                </div>
-                
-            </div>
-            
-            <!-- Right Column: Contact Form -->
-            <div class="contact-right">
-                <div class="contact-form-container">
-                    <?php 
-                    // Display Contact Form 7
-                    echo do_shortcode('[contact-form-7 id="10cf1bd" title="Contact form - Zomer in Linden"]'); 
-                    ?>
                 </div>
             </div>
             

@@ -21,65 +21,93 @@ get_header(); ?>
             <h1 class="page-title"><?php the_title(); ?></h1>
         </header>
         
-        <!-- Practical Info Sections -->
-        <div class="practical-content">
-            
+        <!-- Main Content (Gutenberg blocks for general info) -->
+        <div class="practical-content gutenberg-content">
             <?php
-            // Check if we have repeater fields for practical info
-            if (have_rows('practical_info_sections')):
-                while (have_rows('practical_info_sections')): the_row();
-                    $section_title = get_sub_field('section_title');
-                    $section_content = get_sub_field('section_content');
-                    $section_icon = get_sub_field('section_icon');
-                    ?>
-                    
-                    <section class="practical-section">
-                        <?php if ($section_icon): ?>
-                            <div class="section-icon">
-                                <img src="<?php echo esc_url($section_icon['url']); ?>" alt="<?php echo esc_attr($section_title); ?>">
-                            </div>
-                        <?php endif; ?>
-                        
-                        <h2><?php echo esc_html($section_title); ?></h2>
-                        <div class="section-content">
-                            <?php echo wp_kses_post($section_content); ?>
-                        </div>
-                    </section>
-                    
-                <?php
-                endwhile;
-            else:
-                // Fallback to regular page content
-                ?>
-                <div class="default-content">
-                    <?php
-                    while (have_posts()): the_post();
-                        the_content();
-                    endwhile;
-                    ?>
-                </div>
-            <?php endif; ?>
-            
+            while (have_posts()): the_post();
+                the_content();
+            endwhile;
+            ?>
         </div>
         
-        <!-- FAQ Section (Optional) -->
-        <?php if (have_rows('faq_items')): ?>
+        <!-- FAQ Accordion Section -->
+        <?php
+        // Query all FAQs
+        $faq_query = new WP_Query(array(
+            'post_type' => 'faq',
+            'posts_per_page' => -1,
+            'orderby' => 'menu_order date',
+            'order' => 'ASC'
+        ));
+        
+        if ($faq_query->have_posts()): ?>
             <section class="faq-section">
-                <h2><?php esc_html_e('Frequently Asked Questions', 'zomer-in-linden'); ?></h2>
-                <div class="faq-list">
-                    <?php
-                    while (have_rows('faq_items')): the_row();
-                        $question = get_sub_field('question');
-                        $answer = get_sub_field('answer');
+                <h2 class="faq-main-title">Veelgestelde Vragen</h2>
+                
+                <div class="faq-accordion">
+                    <?php 
+                    $faq_index = 0;
+                    while ($faq_query->have_posts()): $faq_query->the_post();
+                        $faq_index++;
+                        $faq_category = get_field('faq_category');
+                        $category_label = '';
+                        
+                        // Get category label
+                        switch($faq_category) {
+                            case 'general':
+                                $category_label = 'Algemeen';
+                                break;
+                            case 'tickets':
+                                $category_label = 'Tickets & Prijzen';
+                                break;
+                            case 'location':
+                                $category_label = 'Locatie & Parkeren';
+                                break;
+                            case 'food':
+                                $category_label = 'Eten & Drinken';
+                                break;
+                            case 'accessibility':
+                                $category_label = 'Toegankelijkheid';
+                                break;
+                            case 'other':
+                                $category_label = 'Overige';
+                                break;
+                            default:
+                                $category_label = '';
+                        }
                         ?>
-                        <div class="faq-item">
-                            <h3 class="faq-question"><?php echo esc_html($question); ?></h3>
-                            <div class="faq-answer">
-                                <?php echo wp_kses_post($answer); ?>
+                        
+                        <div class="faq-item" data-category="<?php echo esc_attr($faq_category); ?>">
+                            <button 
+                                class="faq-question" 
+                                aria-expanded="false" 
+                                aria-controls="faq-answer-<?php echo $faq_index; ?>"
+                                data-faq-toggle>
+                                <?php if ($category_label): ?>
+                                    <span class="faq-category-badge"><?php echo esc_html($category_label); ?></span>
+                                <?php endif; ?>
+                                <span class="faq-question-text"><?php the_title(); ?></span>
+                                <span class="faq-icon" aria-hidden="true">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                                    </svg>
+                                </span>
+                            </button>
+                            
+                            <div 
+                                class="faq-answer" 
+                                id="faq-answer-<?php echo $faq_index; ?>"
+                                aria-hidden="true">
+                                <div class="faq-answer-content">
+                                    <?php the_content(); ?>
+                                </div>
                             </div>
                         </div>
+                        
                     <?php endwhile; ?>
                 </div>
+                
+                <?php wp_reset_postdata(); ?>
             </section>
         <?php endif; ?>
         

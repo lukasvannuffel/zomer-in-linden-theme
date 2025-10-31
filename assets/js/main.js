@@ -8,6 +8,7 @@
  * 4. Contact Form Handling
  * 5. Image Lazy Loading
  * 6. Accessibility Enhancements
+ * 7. FAQ Accordion Handling
  */
 
 (function() {
@@ -256,6 +257,54 @@
             }
         });
     }
+
+    /* ============================================
+   7. FAQ ACCORDION FUNCTIONALITY
+   ============================================ */
+
+function initFaqAccordion() {
+    const faqButtons = document.querySelectorAll('[data-faq-toggle]');
+    
+    if (!faqButtons.length) return;
+    
+    faqButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            const answerId = this.getAttribute('aria-controls');
+            const answer = document.getElementById(answerId);
+            
+            // Close all other FAQs (optional - remove if you want multiple open at once)
+            faqButtons.forEach(otherButton => {
+                if (otherButton !== this) {
+                    otherButton.setAttribute('aria-expanded', 'false');
+                    const otherAnswerId = otherButton.getAttribute('aria-controls');
+                    const otherAnswer = document.getElementById(otherAnswerId);
+                    if (otherAnswer) {
+                        otherAnswer.setAttribute('aria-hidden', 'true');
+                        otherAnswer.style.maxHeight = '0';
+                    }
+                }
+            });
+            
+            // Toggle current FAQ
+            this.setAttribute('aria-expanded', !isExpanded);
+            answer.setAttribute('aria-hidden', isExpanded);
+            
+            if (!isExpanded) {
+                // Open: Set max-height to scrollHeight
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            } else {
+                // Close: Set max-height to 0
+                answer.style.maxHeight = '0';
+            }
+        });
+    });
+    
+    // Optional: Open first FAQ by default
+    if (faqButtons.length > 0) {
+        // faqButtons[0].click(); // Uncomment to auto-open first FAQ
+    }
+}
     
     /* ============================================
        INITIALIZATION
@@ -275,6 +324,7 @@
         initContactForm();
         initLazyLoading();
         initAccessibility();
+        initFaqAccordion();
         
         console.log('Zomer in Linden theme initialized ✓');
     }

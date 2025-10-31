@@ -8,6 +8,7 @@
  */
 
 $partners_title = get_field('partners_title');
+$partners_subtitle = get_field('partners_subtitle');
 ?>
 
 <section id="partners" class="partners-section section-padding">
@@ -18,6 +19,9 @@ $partners_title = get_field('partners_title');
             <h2 class="section-title">
                 <?php echo $partners_title ? esc_html($partners_title) : esc_html__('Our Partners', 'zomer-in-linden'); ?>
             </h2>
+            <?php if ($partners_subtitle): ?>
+                <p class="section-subtitle"><?php echo esc_html($partners_subtitle); ?></p>
+            <?php endif; ?>
         </header>
         
         <!-- Partners Grid -->

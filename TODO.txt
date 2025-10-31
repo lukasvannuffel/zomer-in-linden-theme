@@ -1,15 +1,14 @@
-HERO SECTION
---> CTA border-radius volledig afronden.
 
-ABOUT SECTION
---> Instagram feed embedden. 
 
 PARTNERS SECTION
 --> Logo's verder aanvullen en height iets groter maken. 
 
 CONTACT SECTION
---> 100 of 120 vh geven ipv wat het nu is. 
+--> Styling fixen 
 
 RESPONSIVE
 --> Witte rand rechts wanneer er op iPad wordt gekeken.
+            Nu ineens niet meer?????? 
 
+PRAKTISCH
+--> FAQ fields maken & content toevoegen
