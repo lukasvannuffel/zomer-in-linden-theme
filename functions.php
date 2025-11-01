@@ -388,6 +388,19 @@ function zil_customize_register($wp_customize) {
 }
 add_action('customize_register', 'zil_customize_register');
 
+
+/**
+ * Dynamic meta tags for artists
+ */
+function zil_dynamic_meta_tags() {
+    if (is_singular('artist')) {
+        $description = get_field('short_description') ?: get_bloginfo('description');
+        echo '<meta name="description" content="' . esc_attr($description) . '">' . "\n";
+    }
+}
+add_action('wp_head', 'zil_dynamic_meta_tags');
+
+
 /**
  * Helper function to get theme settings
  * Usage: zil_get_setting('contact_email')

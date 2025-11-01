@@ -12,11 +12,37 @@
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
-<head>
+<head>    
+    <title><?php wp_title('|', true, 'right'); ?></title>
+
+    <!-- Basic meta tags -->
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    
+
+    <!-- SEO meta tags -->
+    <meta name="description" content="Zomer in Linden is een driedaags dorpsfestival in Linden met muziek, sfeer en activiteiten voor jong en oud. Ontdek de line-up, praktische info en tickets.">
+    <meta name="keywords" content="Zomer in Linden, Linden feest, Linge feest, dorpsfestival, line-up, zomerfestival, scouts festival, muziek Linden">
+    <meta name="author" content="Zomer in Linden">
+
+    <!-- Open Graph tags (Facebook, Instagram, WhatsApp) -->
+    <meta property="og:title" content="<?php wp_title(); ?>">
+    <meta property="og:description" content="Beleef het driedaagse dorpsfestival in Linden – muziek, sfeer, line-up en praktische info.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?php echo esc_url(get_permalink()); ?>">
+    <meta property="og:image" content="<?php echo esc_url(get_template_directory_uri() . '/assets/images/og-image.jpg'); ?>">
+    <meta property="og:site_name" content="Zomer in Linden">
+
+    <!-- Twitter tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php wp_title(); ?>">
+    <meta name="twitter:description" content="Beleef het driedaagse dorpsfestival in Linden – ontdek de line-up en praktische info.">
+    <meta name="twitter:image" content="<?php echo esc_url(get_template_directory_uri() . '/assets/images/og-image.jpg'); ?>">
+
+    <!-- Canonical link -->
+    <link rel="canonical" href="<?php echo esc_url(get_permalink()); ?>">
+
+    <!-- WordPress head -->
     <?php wp_head(); ?>
 </head>
 
