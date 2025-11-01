@@ -1085,87 +1085,110 @@ body.force-header-fill .site-header {
    9. FOOTER
    ============================================ */
 
-.site-footer {
+   .site-footer {
     background: var(--color-dark);
-    color: var(--color-light);
+    color: var(--color-white);
     padding: var(--spacing-lg) 0 var(--spacing-md);
 }
 
-.footer-grid {
-    display: grid;
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
+    text-align: center;
 }
 
-.footer-column h3 {
-    font-family: var(--font-heading);
-    font-weight: 900; /* Kanit Black */
-    color: var(--color-white);
-    margin-bottom: var(--spacing-md);
-    font-size: 1.25rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+/* Footer Logo */
+.footer-logo {
+    flex-shrink: 0;
 }
 
-.footer-column p,
-.footer-column a {
-    font-family: var(--font-primary);
-    font-weight: 600;
-    color: var(--color-light);
+.footer-logo img,
+.footer-logo .custom-logo {
+    height: 80px;
+    width: auto;
 }
 
-.footer-column a:hover {
-    color: var(--color-primary);
+.footer-logo .text-logo {
+    background: var(--color-primary);
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+/* Footer Navigation */
+.footer-navigation {
+    flex: 1;
 }
 
 .footer-menu {
     list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    align-items: center;
 }
 
 .footer-menu li {
-    margin-bottom: var(--spacing-sm);
+    margin: 0;
 }
 
 .footer-menu a {
-    font-family: var(--font-primary);
+    font-family: var(--font-navigation);
     font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--color-white);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-size: 0.95rem;
-}
-
-.social-links {
-    display: flex;
-    gap: var(--spacing-sm);
-}
-
-.social-links a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
+    letter-spacing: 1px;
     transition: var(--transition);
 }
 
-.social-links a:hover {
-    background: var(--color-primary);
+.footer-menu a:hover {
+    color: var(--color-primary);
+}
+
+/* Footer Social Icons */
+.footer-social {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.footer-social a {
+    color: var(--color-white);
+    transition: var(--transition);
+}
+
+.footer-social a:hover {
+    color: var(--color-primary);
     transform: translateY(-3px);
 }
 
+/* Footer Bottom - Copyright */
 .footer-bottom {
+    margin-top: var(--spacing-lg);
     padding-top: var(--spacing-md);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
     text-align: center;
 }
 
 .copyright {
     font-family: var(--font-primary);
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    color: var(--color-light);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.copyright a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.copyright a:hover {
+    color: var(--color-white);
 }
 
 /* ============================================
@@ -1635,8 +1658,34 @@ body.force-header-fill .site-header {
     }
     
     /* Footer */
-    .footer-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-menu {
+        flex-direction: column; /* Keep vertical stacking */
+        gap: var(--spacing-sm);
+        align-items: center;
+    }
+    
+    .footer-logo {
+        order: 1;
+        align-self: flex-start; /* Align logo to top */
+    }
+    
+    .footer-navigation {
+        order: 2;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .footer-social {
+        order: 3;
+        align-self: flex-start; /* Align social icons to top */
     }
     
     /* Line-up */
